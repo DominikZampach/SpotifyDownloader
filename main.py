@@ -1,5 +1,5 @@
-import mainProgram
+from mainProgram import MainProgram
 
-p = mainProgram.MainProgram()
+p = MainProgram()
 #https://open.spotify.com/playlist/17Ad33HRun5s1rxIzcOSxU?si=4dcd1104869c4297
 p.main()
