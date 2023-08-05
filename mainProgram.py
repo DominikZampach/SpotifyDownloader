@@ -1,6 +1,7 @@
 import sys, requests
 from publicPlaylist import PublicPlaylist
 from privatePlaylist import PrivatePlaylist
+from auth import Auth
 
 class MainProgram():
     def __init__(self) -> None:
@@ -8,7 +9,7 @@ class MainProgram():
     
     def main(self):
         print("Welcome to my application for downloading Spotify playlists.\nI'm really happy you have chosen my application <3")
-        
+        Auth().get_auth()
         self.get_state_of_PL()
         
         if self.info["public"] == True:
@@ -19,7 +20,7 @@ class MainProgram():
             self.info["songs"] = private.get_list_of_songs()
         
         #Now we have song names and author, so we can go and try to download them
-            
+        
         print(self.info)
         
     
