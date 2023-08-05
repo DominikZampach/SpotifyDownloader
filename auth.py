@@ -18,7 +18,8 @@ class Auth():
         show_dialog = "&show_dialog=true" 
         self.url = url + "?client_id=" + self.client_id + redirect + response_type + scope + show_dialog
         webbrowser.open(self.url)
-        #Teď somehow vymyslet jakou redirect_uri používat abych se dostal k 
+        #Teď somehow vymyslet jakou redirect_uri používat abych se dostal ke query
+        #UŽ VÍM, UDĚLAT LOCAL FLASK APLIKACI JEN NA TOTO !!
         pass
    
     
