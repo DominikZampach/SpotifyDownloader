@@ -19,7 +19,7 @@ class Auth():
         self.url = url + "?client_id=" + self.client_id + redirect + response_type + scope + show_dialog
         webbrowser.open(self.url)
         #Teď somehow vymyslet jakou redirect_uri používat abych se dostal ke query
-        #UŽ VÍM, UDĚLAT LOCAL FLASK APLIKACI JEN NA TOTO !!
+        #UŽ VÍM, UDĚLAT LOCAL FLASK APLIKACI JEN NA TOTO (Flask API na localhost)!!
         pass
    
     
