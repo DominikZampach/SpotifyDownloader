@@ -2,9 +2,13 @@ import sys, requests
 from publicPlaylist import PublicPlaylist
 from privatePlaylist import PrivatePlaylist
 from auth import Auth
+import os
+import subprocess
+from app import Server
 
 class MainProgram():
     def __init__(self) -> None:
+        self.dir_path = os.path.dirname(os.path.realpath(__file__))
         self.info = {}
     
     def main(self):
@@ -20,7 +24,6 @@ class MainProgram():
             self.info["songs"] = private.get_list_of_songs()
         
         #Now we have song names and author, so we can go and try to download them
-        
         print(self.info)
         
     
@@ -41,9 +44,10 @@ class MainProgram():
             input()
             sys.exit()
     
-    
-    
-    
+    def run_batch(self, fileName):
+        subprocess.call([f'{self.dir_path}\{fileName}'])
+        
+        
     
     
     
