@@ -1,17 +1,20 @@
 import requests
+from auth import Auth
 
-class PublicPlaylist():
+class Playlist():
     def __init__(self, info) -> None:
         self.info = info
+        self.auth = Auth()
+        self.songs = {}
     
     def get_list_of_songs(self):
         self.get_playlist_id()
-        self.get_playlist_items()
-        self.songs = {}
+        self.songs = self.get_playlist_items()
+        
         #xxx, then return list of song names, maybe with author names
         return self.songs
     
-    def get_playlist_id(self):
+    def get_playlist_id(self): #Both for private/public playlists (pretty cool)
         self.info["urlPlaylist"] = input("Paste your url adress for playlist: ")
         #Before checking url, check if it's even url :D (That means try request that url and see the response code)
         notURL = True
@@ -32,6 +35,5 @@ class PublicPlaylist():
     
     def get_playlist_items(self):
         link = 'https://api.spotify.com/v1/playlists/' + self.info["playlist_id"]
-        request = requests.get(link).content #Potřeba auth
-        print(request)
-        return 0
+        request = requests.get(link).content #Auth needed, workin on it
+        return request
