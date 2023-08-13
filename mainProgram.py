@@ -9,8 +9,6 @@ class MainProgram():
         self.info = {}
     
     def main(self):
-        self.start_server()
-        time.sleep(1) #for server start
         print("Welcome to my application for downloading Spotify playlists.\nI'm really happy you have chosen my application <3")
         #Private or public status isnt needed
         
@@ -20,8 +18,6 @@ class MainProgram():
         #Now we have song names and author, so we can go and try to download them
         print(self.info)
         
-    def run_bat(self, fileName):
-        subprocess.call([f'{self.dir_path}\{fileName}'])
         
         
     

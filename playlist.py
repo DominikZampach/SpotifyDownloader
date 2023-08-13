@@ -1,4 +1,4 @@
-import requests
+import requests, time
 from auth import Auth
 
 class Playlist():
@@ -6,11 +6,16 @@ class Playlist():
         self.info = info
         self.auth = Auth()
         self.songs = {}
+        self.token = ""
     
     def get_list_of_songs(self):
         self.get_playlist_id()
-        self.songs = self.get_playlist_items()
         
+        print("Now, I need you to grant me access to your Spotify account to download playlists.")
+        time.sleep(2)
+        self.token = self.auth.do_auth()
+        
+        self.songs = self.get_playlist_items()
         #xxx, then return list of song names, maybe with author names
         return self.songs
     
@@ -33,7 +38,8 @@ class Playlist():
         #here, the right Spotify playlist URL adress comes
         self.info["playlist_id"] = self.info["urlPlaylist"][34:self.info["urlPlaylist"].index("?")]
     
-    def get_playlist_items(self):
+    def get_playlist_items(self, token):
         link = 'https://api.spotify.com/v1/playlists/' + self.info["playlist_id"]
+        header = "Need token"
         request = requests.get(link).content #Auth needed, workin on it
         return request
