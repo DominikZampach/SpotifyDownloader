@@ -15,9 +15,9 @@ class Playlist():
         time.sleep(2)
         self.token = self.auth.do_auth()
         
-        self.songs = self.get_playlist_items()
+        #self.songs = self.get_playlist_items(self.token)
         #xxx, then return list of song names, maybe with author names
-        return self.songs
+        #return self.songs
     
     def get_playlist_id(self): #Both for private/public playlists (pretty cool)
         self.info["urlPlaylist"] = input("Paste your url adress for playlist: ")
@@ -40,6 +40,6 @@ class Playlist():
     
     def get_playlist_items(self, token):
         link = 'https://api.spotify.com/v1/playlists/' + self.info["playlist_id"]
-        header = "Need token"
+        header = {"Authorization": "Bearer " + token}
         request = requests.get(link).content #Auth needed, workin on it
         return request

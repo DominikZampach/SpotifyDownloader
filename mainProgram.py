@@ -16,7 +16,8 @@ class MainProgram():
         self.info["songs"] = self.pl.get_list_of_songs()
         
         #Now we have song names and author, so we can go and try to download them
-        print(self.info)
+        #print(self.info)
+        input()
         
         
         
