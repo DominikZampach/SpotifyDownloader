@@ -26,7 +26,7 @@ class Auth():
         
         return text
 
-    def code_challenge(self, code_verifier): #not working
+    def code_challenge(self, code_verifier): #not working 💀
         code_verifier_bytes = code_verifier.encode()
         text_hash = hashlib.sha256(code_verifier_bytes).digest()
         text_hash = base64.b64encode(text_hash)
