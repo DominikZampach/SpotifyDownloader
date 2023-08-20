@@ -1,20 +1,11 @@
 import requests, time
-from auth import Auth
 
 class Playlist():
-    def __init__(self, info) -> None:
-        self.info = info
-        self.auth = Auth()
+    def __init__(self) -> None:
         self.songs = {}
-        self.token = ""
     
-    def get_list_of_songs(self):
+    def get_list_of_songs(self, token):
         self.get_playlist_id()
-        
-        print("Now, I need you to grant me access to your Spotify account to download playlists.")
-        time.sleep(2)
-        self.token = self.auth.do_auth()
-        
         #self.songs = self.get_playlist_items(self.token)
         #xxx, then return list of song names, maybe with author names
         #return self.songs
