@@ -1,12 +1,13 @@
-import os, requests, webbrowser, random, urllib, hashlib, base64, json, time
+import os, requests, webbrowser, random, urllib, hashlib, base64, json, time, datetime
 from dotenv import load_dotenv
 
 class Auth():
     def __init__(self) -> None:
         self.client_id = "44f4f79135ee4d8883e443eb74bb17f6"
         self.redirect_uri = "http://127.0.0.1:5678/redirect"
-        self.code_hashed = ""
-        self.code_veri = ""
+        self.code_hashed: str
+        self.code_veri: str
+        self.token: str
     
     def do_auth(self): #main function of this class!
         print("Now, I need you to grant me access to your Spotify account to download playlists.")
@@ -17,9 +18,14 @@ class Auth():
         self.get_authorize()
         time.sleep(5) #user need some time to grant access, make it another way
         self.load_json() #Get data from json file
-        self.get_AccessToken()
-        print("self.code_veri: " + self.code_veri + "\nself.code_hashed: " + self.code_hashed)
+        self.token = self.get_AccessToken()
+        self.save_json()
         return 
+    
+    def check_user(self):
+        """look if there is any login in the data.json newer than 1hour, if so, i can just use it and dont need authorization again
+        """
+        pass
     
     def code_verifier(self):
         length = 128
@@ -43,12 +49,10 @@ class Auth():
                    'response_type': "code",
                    'scope': "playlist-read-private user-library-read", 
                    'client_id': self.client_id,
-                   #'show_dialog': "true", nejsem si jistý co tohle znamená xD
                    'code_challenge_method': "S256",
                    'code_challenge': self.code_hashed
                    }
         authUrl = url + "?" + urllib.parse.urlencode(params)
-        print(authUrl) #test
         webbrowser.open(authUrl)
         
     def get_AccessToken(self):
@@ -57,16 +61,22 @@ class Auth():
                   'client_id': self.client_id,
                   'code_verifier': self.code_veri, #tohle se jebe
                   'grant_type': "authorization_code",
-                  'code': self.args.get("args").get("code")}
+                  'code': self.data.get("args").get("code")}
 
         AccTokenUrl = url + "?" + urllib.parse.urlencode(params)
         print(AccTokenUrl)
         responseToken = requests.post(AccTokenUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}).json()
-        print("Token: " + str(responseToken))
-        #return responseToken.get("access_token")
+        return responseToken.get("access_token")
 
     def load_json(self):
-        with open('args.json', 'r') as f: 
-            self.args = json.load(f)
-        print(self.args)
-   
+        with open('data.json', 'r') as f: 
+            self.data = json.load(f)
+    
+    def save_json(self):
+        with open('data.json', 'w') as f:
+            now = datetime.datetime.now()
+            self.data["args"]["token"] = self.token
+            self.data["args"]["token_expire_time"] = now.strftime("%H:%M")
+            json_object = json.dumps(self.data, indent=4)
+            f.write(json_object)
+    
