@@ -6,10 +6,8 @@ app = Flask("Get redirect query")
 
 @app.route("/redirect", methods=["GET"])
 def redirect(): #redirect url, where i will save args
-    now = datetime.datetime.now()
-    date = now.strftime("%d/%m/%Y")
     saved = request.args
-    data = {"date": date, "args": saved}
+    data = {"args": saved}
     json_object = json.dumps(data, indent=4)
     with open ("args.json", "w") as file:
         file.write(json_object)

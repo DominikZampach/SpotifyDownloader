@@ -32,5 +32,5 @@ class Playlist():
     def get_playlist_items(self, token):
         link = 'https://api.spotify.com/v1/playlists/' + self.info["playlist_id"]
         header = {"Authorization": "Bearer " + token}
-        request = requests.get(link).content #Auth needed, workin on it
+        request = requests.get(link).content 
         return request

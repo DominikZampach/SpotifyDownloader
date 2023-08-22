@@ -14,8 +14,8 @@ class MainProgram():
         #Private or public status isnt needed
         
         self.info["token"] = self.auth.do_auth()
-        
-        self.info["songs"] = self.pl.get_list_of_songs(self.info["token"])
+        print(self.info["token"])
+        #self.info["songs"] = self.pl.get_list_of_songs(self.info["token"])
         
         #Now we have song names and author, so we can go and try to download them
         

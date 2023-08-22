@@ -10,22 +10,64 @@ class Auth():
         self.token: str
     
     def do_auth(self): #main function of this class!
-        print("Now, I need you to grant me access to your Spotify account to download playlists.")
-        time.sleep(3)
-        
-        self.code_veri = self.code_verifier() #generate code_verifier string (not hashed yet)
-        self.code_hashed = self.code_challenge(self.code_veri) #generate code challenge, saved into self.
-        self.get_authorize()
-        time.sleep(5) #user need some time to grant access, make it another way
-        self.load_json() #Get data from json file
-        self.token = self.get_AccessToken()
-        self.save_json()
-        return 
+        self.load_json()
+        if not self.logged_user():
+            print("Now, I need you to grant me access to your Spotify account to download playlists.")
+            time.sleep(3)
+            
+            self.code_veri = self.code_verifier() #generate code_verifier string (not hashed yet)
+            self.code_hashed = self.code_challenge(self.code_veri) #generate code challenge, saved into self.
+            self.get_authorize()
+            time.sleep(5) #user need some time to grant access, make it another way
+            self.load_json() #Get data from json file
+            self.token = self.get_AccessToken()
+            self.save_json()
+            return self.token()
+        else:
+            return self.data.get("token")
     
-    def check_user(self):
+    def logged_user(self):
         """look if there is any login in the data.json newer than 1hour, if so, i can just use it and dont need authorization again
         """
-        pass
+        time_now = self.current_time_and_date()
+        time_of_token_call = self.data.get("token_call_datetime")
+        if time_of_token_call == None or time_of_token_call == "null":
+            return False
+        
+        converted_time_now = self.time_converter(time_now)
+        converted_time_of_token_call = self.time_converter(time_of_token_call)
+        if converted_time_of_token_call + datetime.timedelta(minutes=55) > converted_time_now:
+            return False
+        
+        
+        header = {'Authorization': 'Bearer ' + self.data.get("args").get("token")}
+        response = requests.get("https://api.spotify.com/v1/me", headers=header)
+        responseStatus = response.status_code
+        if responseStatus != 200:
+            return False
+        
+        
+        responseJSON = json.loads(response.json)
+        user_name = responseJSON.get("display_name")
+        
+        stay_at_this_acc = input(f"You have used this application recently, do you want to continue as {user_name} (type "'yes'") or want to log into another account (type "'no'"): ").strip().lower()
+        if stay_at_this_acc == "no":
+            return False
+        else:
+            return True
+            
+        
+    def current_time_and_date(self):
+        now = datetime.datetime.now()
+        return now.strftime("%Y/%m/%d/%H/%M")
+    
+    def time_converter(self, time: str):
+        splitted_time = time.split("/")
+        for i in range(len(splitted_time)):
+            splitted_time[i] = int(splitted_time[i])
+            
+        datetime_object = datetime.datetime(*map(int, splitted_time))
+        return datetime_object
     
     def code_verifier(self):
         length = 128
@@ -66,6 +108,7 @@ class Auth():
         AccTokenUrl = url + "?" + urllib.parse.urlencode(params)
         print(AccTokenUrl)
         responseToken = requests.post(AccTokenUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}).json()
+        print(responseToken)
         return responseToken.get("access_token")
 
     def load_json(self):
@@ -74,9 +117,8 @@ class Auth():
     
     def save_json(self):
         with open('data.json', 'w') as f:
-            now = datetime.datetime.now()
-            self.data["args"]["token"] = self.token
-            self.data["args"]["token_expire_time"] = now.strftime("%H:%M")
+            self.data["token"] = self.token
+            self.data["token_call_datetime"] = self.current_time_and_date()
             json_object = json.dumps(self.data, indent=4)
             f.write(json_object)
     
