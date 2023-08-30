@@ -9,7 +9,7 @@ class Auth():
         self.code_veri: str
         self.token: str
     
-    def do_auth(self): #main function of this class!
+    def do_auth(self): #main function of this class!, WORKING
         self.load_json()
         if not self.logged_user():
             print("Now, I need you to grant me access to your Spotify account to download playlists.")
@@ -18,12 +18,12 @@ class Auth():
             self.code_veri = self.code_verifier() #generate code_verifier string (not hashed yet)
             self.code_hashed = self.code_challenge(self.code_veri) #generate code challenge, saved into self.
             self.get_authorize()
-            time.sleep(5) #user need some time to grant access, make it another way
-            self.load_json() #Get data from json file
+            self.load_json() #Get data from data.json
             self.token = self.get_AccessToken()
             self.save_json()
-            return self.token()
+            return self.token
         else:
+            #print("no API call, just pull from data.json")
             return self.data.get("token")
     
     def logged_user(self):
@@ -36,27 +36,24 @@ class Auth():
         
         converted_time_now = self.time_converter(time_now)
         converted_time_of_token_call = self.time_converter(time_of_token_call)
-        if converted_time_of_token_call + datetime.timedelta(minutes=55) > converted_time_now:
+        if converted_time_of_token_call + datetime.timedelta(minutes=55) < converted_time_now:
             return False
         
         
-        header = {'Authorization': 'Bearer ' + self.data.get("args").get("token")}
+        header = {'Authorization': 'Bearer ' + self.data.get("token")}
         response = requests.get("https://api.spotify.com/v1/me", headers=header)
         responseStatus = response.status_code
         if responseStatus != 200:
             return False
+        API_me = response.json()
+        user_name = API_me.get("display_name")
         
-        
-        responseJSON = json.loads(response.json)
-        user_name = responseJSON.get("display_name")
-        
-        stay_at_this_acc = input(f"You have used this application recently, do you want to continue as {user_name} (type "'yes'") or want to log into another account (type "'no'"): ").strip().lower()
-        if stay_at_this_acc == "no":
+        stay_at_this_acc = input(f"You have used this application recently, do you want to continue as {user_name} (type "'y'") or want to log into another account (type "'n'"): ").strip().lower()
+        if stay_at_this_acc == "n":
             return False
         else:
             return True
             
-        
     def current_time_and_date(self):
         now = datetime.datetime.now()
         return now.strftime("%Y/%m/%d/%H/%M")
@@ -69,7 +66,7 @@ class Auth():
         datetime_object = datetime.datetime(*map(int, splitted_time))
         return datetime_object
     
-    def code_verifier(self):
+    def code_verifier(self) -> str:
         length = 128
         text = ""
         char_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -96,6 +93,8 @@ class Auth():
                    }
         authUrl = url + "?" + urllib.parse.urlencode(params)
         webbrowser.open(authUrl)
+        time.sleep(3)
+        input("After authorizing throught web browser, press Enter to continue...")
         
     def get_AccessToken(self):
         url = 'https://accounts.spotify.com/api/token'
@@ -103,7 +102,7 @@ class Auth():
                   'client_id': self.client_id,
                   'code_verifier': self.code_veri, #tohle se jebe
                   'grant_type': "authorization_code",
-                  'code': self.data.get("args").get("code")}
+                  'code': self.data.get("code")}
 
         AccTokenUrl = url + "?" + urllib.parse.urlencode(params)
         print(AccTokenUrl)
