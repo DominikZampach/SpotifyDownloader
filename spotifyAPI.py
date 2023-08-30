@@ -5,10 +5,13 @@ class SpotifyAPI():
     def __init__(self, token) -> None:
         self.token = token
         self.authHeader = {"Authorization": "Bearer " + self.token}
+        self.playlist_name: str
+        self.number_of_tracks: int
     
     def get_list_of_songs(self):
         self.playlist_id: str = self.get_playlist_id()
-        self.playlist_name: str = self.get_playlist_name()
+        playlist_name_and_number_of_tracks: list = self.get_playlist_name_and_total_number_of_tracks()
+        self.playlist_name, self.number_of_tracks  = playlist_name_and_number_of_tracks[0], playlist_name_and_number_of_tracks[1]
         self.tracks: list[Track] = self.get_playlist_tracks()
         print(self.tracks)
         print(self.playlist_name)
@@ -31,15 +34,30 @@ class SpotifyAPI():
         
         return self.playlistURL[34:self.playlistURL.index("?")] #returns playlist_id
     
-    def get_playlist_name(self):
+    def get_playlist_name_and_total_number_of_tracks(self):
         link: str = 'https://api.spotify.com/v1/playlists/' + self.playlist_id
         request: dict = requests.get(link, headers=self.authHeader).json()
-        return request["name"]
-        
+        return [request["name"], request["tracks"]["total"]]
     
     def get_playlist_tracks(self):
-        link: str = 'https://api.spotify.com/v1/playlists/' + self.playlist_id + '/tracks'
-        request: dict = requests.get(link, headers=self.authHeader).json()
+        offset: int = 0
+        number_of_items: int = self.number_of_tracks
+        
+        while number_of_items >= 0:
+            link: str = 'https://api.spotify.com/v1/playlists/' + self.playlist_id + '/tracks?limit=100&offset=' + offset
+            request: dict = requests.get(link, headers=self.authHeader).json()
+            for i in range(len(request["items"])):
+                item: dict = request["items"][i]
+                number_of_artists: int = len(item["artists"])
+                track_artist: list
+                for i in range(number_of_artists):
+                    track_artist[i] = item["artists"].get("name")
+                #album, jmeno songy, a tak dale
+            
+            number_of_items -= 100
+            if number_of_items >= 0:
+                offset += 100
+            
         #get info and make Track objects placed in big list
         return request
 
