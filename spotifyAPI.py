@@ -41,18 +41,15 @@ class SpotifyAPI():
     
     def get_playlist_tracks(self):
         offset: int = 0
+        list_of_tracks: list[Track]
         number_of_items: int = self.number_of_tracks
         
         while number_of_items >= 0:
             link: str = 'https://api.spotify.com/v1/playlists/' + self.playlist_id + '/tracks?limit=100&offset=' + offset
             request: dict = requests.get(link, headers=self.authHeader).json()
             for i in range(len(request["items"])):
-                item: dict = request["items"][i]
-                number_of_artists: int = len(item["artists"])
-                track_artist: list
-                for i in range(number_of_artists):
-                    track_artist[i] = item["artists"].get("name")
-                #album, jmeno songy, a tak dale
+                single_item: dict = request["items"][i]["track"]
+                list_of_tracks.append(Track(single_item))
             
             number_of_items -= 100
             if number_of_items >= 0:
