@@ -94,7 +94,8 @@ class Auth():
         authUrl = url + "?" + urllib.parse.urlencode(params)
         webbrowser.open(authUrl)
         time.sleep(3)
-        input("After authorizing throught web browser, press Enter to continue...")
+        print("After authorizing throught web browser, press Enter to continue...")
+        input()
         
     def get_AccessToken(self):
         url = 'https://accounts.spotify.com/api/token'

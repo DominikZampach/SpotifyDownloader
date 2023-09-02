@@ -13,8 +13,6 @@ class SpotifyAPI():
         playlist_name_and_number_of_tracks: list = self.get_playlist_name_and_total_number_of_tracks()
         self.playlist_name, self.number_of_tracks  = playlist_name_and_number_of_tracks[0], playlist_name_and_number_of_tracks[1]
         self.tracks: list[Track] = self.get_playlist_tracks()
-        print(self.tracks)
-        print(self.playlist_name)
     
     def get_playlist_id(self): #Both for private/public playlists (pretty cool)
         self.playlistURL = input("Paste your url adress for playlist: ")
@@ -41,22 +39,21 @@ class SpotifyAPI():
     
     def get_playlist_tracks(self):
         offset: int = 0
-        list_of_tracks: list[Track]
+        list_of_tracks: list[Track] = []
         number_of_items: int = self.number_of_tracks
         
         while number_of_items >= 0:
-            link: str = 'https://api.spotify.com/v1/playlists/' + self.playlist_id + '/tracks?limit=100&offset=' + offset
+            link: str = 'https://api.spotify.com/v1/playlists/' + self.playlist_id + '/tracks?limit=100&offset=' + str(offset)
             request: dict = requests.get(link, headers=self.authHeader).json()
             for i in range(len(request["items"])):
                 single_item: dict = request["items"][i]["track"]
                 list_of_tracks.append(Track(single_item))
             
             number_of_items -= 100
-            if number_of_items >= 0:
-                offset += 100
+            offset += 100
             
         #get info and make Track objects placed in big list
-        return request
+        return list_of_tracks
 
 """
 JUST FOR TESTING
