@@ -9,6 +9,10 @@ class Track():
         for i in range(number_of_artists):
             self.track_artist.append(item["artists"][i]["name"])
     
+    def download_track(self):
+        pass
+    
     def url_of_track_on_YT(self):
         pass
+
     #def Vše, co je možné dělat s tracky (stahovat, ...)

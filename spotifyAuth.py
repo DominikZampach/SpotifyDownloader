@@ -1,7 +1,7 @@
 import os, requests, webbrowser, random, urllib, hashlib, base64, json, time, datetime
 from dotenv import load_dotenv
 
-class Auth():
+class SpotifyAuth():
     def __init__(self) -> None:
         self.client_id = "44f4f79135ee4d8883e443eb74bb17f6"
         self.redirect_uri = "http://127.0.0.1:5678/redirect"
