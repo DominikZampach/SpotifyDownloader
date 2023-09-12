@@ -5,7 +5,7 @@ This program/application is created and provided for educational purposes only. 
 By using this program/application, you acknowledge that:
 
 1. You will only use this program/application for lawful and ethical purposes.
-2. You will not engage in any activities that violate any local, state, national, or international laws or regulations.
+2. You will not engage in any activities that violate any local, state, national, or international laws or regulations or any company term of use!
 3. You understand that the creator(s) of this program/application do not endorse, encourage, or take any responsibility for any misuse or illegal use of this program/application.
 
 The creator(s) of this program/application are not liable for any actions taken by individuals who use this program/application. Any consequences of using this program/application for illegal or unethical purposes rest solely upon the user.
