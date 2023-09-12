@@ -15,6 +15,7 @@ class MainProgram():
         #Here, I will need to add way to get the user create his own google application and use it for API calls
         
         self.info["token"] = self.SpotAuth.do_auth()
+        self.info["yt_request"] = self.YTAuth.authorize()
         self.SpotAPI = SpotifyAPI(self.info["token"])
         self.info["songs"] = self.SpotAPI.get_list_of_songs()
         for song in self.info["songs"]:

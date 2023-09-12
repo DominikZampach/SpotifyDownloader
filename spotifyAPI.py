@@ -2,12 +2,13 @@ import requests, time
 from track import Track
 
 class SpotifyAPI():
-    def __init__(self, token) -> None:
+    def __init__(self, token, ytAuth) -> None:
         self.token = token
+        self.ytAuth = ytAuth
         self.authHeader = {"Authorization": "Bearer " + self.token}
         self.playlist_name: str
         self.number_of_tracks: int
-    
+
     def get_list_of_songs(self):
         self.playlist_id: str = self.get_playlist_id()
         playlist_name_and_number_of_tracks: list = self.get_playlist_name_and_total_number_of_tracks()
@@ -36,7 +37,7 @@ class SpotifyAPI():
         link: str = 'https://api.spotify.com/v1/playlists/' + self.playlist_id
         request: dict = requests.get(link, headers=self.authHeader).json()
         return [request["name"], request["tracks"]["total"]]
-    
+
     def get_playlist_tracks(self):
         offset: int = 0
         list_of_tracks: list[Track] = []
@@ -47,7 +48,7 @@ class SpotifyAPI():
             request: dict = requests.get(link, headers=self.authHeader).json()
             for i in range(len(request["items"])):
                 single_item: dict = request["items"][i]["track"]
-                list_of_tracks.append(Track(single_item))
+                list_of_tracks.append(Track(single_item, self.ytAuth))
             
             number_of_items -= 100
             offset += 100
