@@ -2,7 +2,6 @@ from google.oauth2 import credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 class YTAuth():
-    #Vytvořit zde i ten guide jak to udělat (vlastní aplikace v google console, stáhnutí config.json, atd...)
     def __init__(self) -> None:
         pass
 
