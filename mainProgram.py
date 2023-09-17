@@ -18,11 +18,11 @@ class MainProgram():
         self.apiKey = self.YTAuth.authorize_apiKey()
         self.SpotAPI = SpotifyAPI(self.info["token"], self.apiKey)
         self.info["songs"] = self.SpotAPI.get_list_of_songs()
-        print(self.info["songs"][0].url_of_track_on_YT())
+        #print(self.info["songs"][0].url_of_track_on_YT())
+        self.info["songs"][0].download_track()
         for song in self.info["songs"]:
+            #song.download_track()
             pass
-            #print(str(song.track_name) + " " + str(song.track_artist))
-            
             #Now we have song names and author, so we can go and try to download them
 
         
