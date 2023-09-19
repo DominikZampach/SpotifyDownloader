@@ -38,19 +38,20 @@ class Track():
         videoId = response["items"][0]["id"]["videoId"]
         return videoId
 
-    def download_track(self):
+    def download_track(self, folder_name):
         videoId = self.url_of_track_on_YT()
         url = self.urlYouTube + videoId
         print(url)
-        
         ydl_opts = {
-            'outtmpl': f'downloaded_songs/{self.download_name}',
+            'outtmpl': f'downloaded_songs/{folder_name}/{self.download_name}',
+            'quiet': True
             #'verbose': True #Just for checking errors
         }
         
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
+            print("Song named " + self.track_name + " downloaded.")
         
         except:
             print("Song named " + self.track_name + " cannot be downloaded.")

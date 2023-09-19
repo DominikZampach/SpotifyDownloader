@@ -1,4 +1,4 @@
-import sys, requests, os, subprocess, time
+import os
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth
 from ytAuth import YTAuth
@@ -18,15 +18,14 @@ class MainProgram():
         self.apiKey = self.YTAuth.authorize_apiKey()
         self.SpotAPI = SpotifyAPI(self.info["token"], self.apiKey)
         self.info["songs"] = self.SpotAPI.get_list_of_songs()
-        #print(self.info["songs"][0].url_of_track_on_YT())
-        self.info["songs"][0].download_track()
+        
+        folder_name = self.SpotAPI.playlist_name
+        new_folder = os.path.join(self.dir_path + "/downloaded_songs/", folder_name)
+        os.mkdir(new_folder) #Creating folder for downloading playlist
+        
         for song in self.info["songs"]:
-            #song.download_track()
-            pass
-            #Now we have song names and author, so we can go and try to download them
+            song.download_track(folder_name)
 
-        
-        
         
         
     
