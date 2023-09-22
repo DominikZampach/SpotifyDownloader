@@ -1,5 +1,7 @@
 from googleapiclient.discovery import build
 import yt_dlp
+import os
+import contextlib
 
 class Track():
     def __init__(self, item, apiKey) -> None:
@@ -23,6 +25,9 @@ class Track():
             self.download_name = f"{self.string_track_artist} - {self.track_name}.mp3"
         else:
             self.download_name = f"{self.string_track_artist} - {self.track_name} ({self.track_album}).mp3"
+        
+        if "/" in self.download_name:
+            self.download_name = self.download_name.replace("/", "-") #Securing not creating another folder 
     
     #def Vše, co je možné dělat s tracky (stahovat, ...)
     def url_of_track_on_YT(self):
@@ -44,16 +49,25 @@ class Track():
         print(url)
         ydl_opts = {
             'outtmpl': f'downloaded_songs/{folder_name}/{self.download_name}',
-            'quiet': True
-            #'verbose': True #Just for checking errors
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',  
+                'preferredcodec': 'mp3',  
+                'preferredquality': '192',
+            }]
         }
         
-        try:
+        
+        with open(os.devnull, 'w') as fnull, contextlib.redirect_stdout(fnull), contextlib.redirect_stderr(fnull): #This is for not getting any output into console from yt_dlp library
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            print("Song named " + self.track_name + " downloaded.")
         
-        except:
-            print("Song named " + self.track_name + " cannot be downloaded.")
+        with open("/downloaded_songs/" + folder_name, 'r') as folder:
+            if self.download_name in folder:
+                print("Song named " + self.track_name + " downloaded.")
+            if self.download_name not in folder:
+                print("Song named " + self.track_name + " cannot be downloaded.")
+            else:
+                print(folder)
 
     
