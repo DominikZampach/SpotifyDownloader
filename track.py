@@ -24,7 +24,7 @@ class Track():
         if self.track_name == self.track_album:
             self.download_name = f"{self.string_track_artist} - {self.track_name}.mp3"
         else:
-            self.download_name = f"{self.string_track_artist} - {self.track_name} ({self.track_album}).mp3"
+            self.download_name = f"{self.string_track_artist} - {self.track_name} ({self.track_album})"
         
         if "/" in self.download_name:
             self.download_name = self.download_name.replace("/", "-") #Securing not creating another folder 
@@ -43,31 +43,33 @@ class Track():
         videoId = response["items"][0]["id"]["videoId"]
         return videoId
 
-    def download_track(self, folder_name):
+    def download_track(self, folder_name, dir_path):
         videoId = self.url_of_track_on_YT()
         url = self.urlYouTube + videoId
         print(url)
         ydl_opts = {
             'outtmpl': f'downloaded_songs/{folder_name}/{self.download_name}',
             'format': 'bestaudio/best',
+            'ffmpeg_location': dir_path + '/ffmpeg-6.0-essentials_build/bin/ffmpeg.exe',
+            #Path to FFmpeg inside SpotifyPlaylistDownloader
             'postprocessors': [{
-                'key': 'FFmpegExtractAudio',  
+                'key': 'FFmpegExtractAudio', 
                 'preferredcodec': 'mp3',  
-                'preferredquality': '192',
+                'preferredquality': '192'
             }]
         }
-        
         
         with open(os.devnull, 'w') as fnull, contextlib.redirect_stdout(fnull), contextlib.redirect_stderr(fnull): #This is for not getting any output into console from yt_dlp library
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
         
-        with open("/downloaded_songs/" + folder_name, 'r') as folder:
-            if self.download_name in folder:
-                print("Song named " + self.track_name + " downloaded.")
-            if self.download_name not in folder:
-                print("Song named " + self.track_name + " cannot be downloaded.")
-            else:
-                print(folder)
+        '''
+        Fix This
+        
+        folder = os.listdir(dir_path + '/downloaded_songs/' + folder_name)
+        if self.download_name in folder:
+            print("Song named " + self.track_name + " downloaded.")
+        if self.download_name not in folder:
+            print("Song named " + self.track_name + " cannot be downloaded.")'''
 
     

@@ -21,10 +21,13 @@ class MainProgram():
         
         folder_name = self.SpotAPI.playlist_name
         new_folder = os.path.join(self.dir_path + "/downloaded_songs/", folder_name)
-        os.mkdir(new_folder) #Creating folder for downloading playlist
+        try: 
+            os.mkdir(new_folder)
+        except:
+            pass
         
         for song in self.info["songs"]:
-            song.download_track(folder_name)
+            song.download_track(folder_name, self.dir_path)
 
         
         
