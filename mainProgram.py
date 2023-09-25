@@ -1,5 +1,4 @@
 import os
-from slugify import slugify
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth
 from ytAuth import YTAuth
@@ -34,25 +33,6 @@ class MainProgram():
         except FileExistsError:
             pass
 
-
-def slugify_string(string):
-    slugified = slugify(
-        string,
-        lowercase=False,
-        separator=" ",
-        replacements=[
-            ["<", " "],
-            [">", " "],
-            [":", " "],
-            ["\"", " "],
-            ["/", " "],
-            ["\\", " "],
-            ["|", " "],
-            ["?", " "],
-            ["*", " "],
-            ]
-        )
-    return slugified
 
 # EduLint done
 # mypy

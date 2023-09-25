@@ -1,6 +1,6 @@
 import requests
 from track import Track
-from mainProgram import slugify_string
+from renameString import make_windows_friendly
 
 
 class SpotifyAPI():
@@ -15,7 +15,7 @@ class SpotifyAPI():
         self.playlist_id: str = self.get_playlist_id()
         self.request = self.request_spotify_api()
         # Slugify makes names windows friendly
-        self.playlist_name: str = slugify_string(self.request["name"])
+        self.playlist_name: str = make_windows_friendly(self.request["name"])
         self.number_of_tracks: int = self.request["tracks"]["total"]
 
         self.tracks: list[Track] = self.get_playlist_tracks()

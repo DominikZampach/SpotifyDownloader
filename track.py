@@ -2,13 +2,13 @@ from googleapiclient.discovery import build
 import yt_dlp
 import os
 import contextlib
-from mainProgram import slugify_string
+from renameString import make_windows_friendly
 
 
 class Track():
     def __init__(self, item, api_key) -> None:
         self.youtube = build("youtube", "v3", developerKey=api_key)
-        self.track_album: str = slugify_string(item["album"].get("name"))
+        self.track_album: str = make_windows_friendly(item["album"].get("name"))
         self.track_name: str = item.get("name")
         self.string_track_artist: str = ""
         number_of_artists: int = len(item["artists"])
@@ -29,7 +29,7 @@ class Track():
             self.download_name = (f"{self.string_track_artist} - "
                                   + f"{self.track_name} ({self.track_album})")
 
-        self.download_name = slugify_string(self.download_name)
+        self.download_name = make_windows_friendly(self.download_name)
 
     def url_of_track_on_YT(self):
         search_sentence = self.track_name
