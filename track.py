@@ -1,4 +1,5 @@
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 import yt_dlp
 import os
 import contextlib
@@ -8,7 +9,8 @@ from renameString import make_windows_friendly
 class Track():
     def __init__(self, item, api_key) -> None:
         self.youtube = build("youtube", "v3", developerKey=api_key)
-        self.track_album: str = make_windows_friendly(item["album"].get("name"))
+        self.track_album: str = make_windows_friendly(
+            item["album"].get("name"))
         self.track_name: str = item.get("name")
         self.string_track_artist: str = ""
         number_of_artists: int = len(item["artists"])
@@ -35,11 +37,23 @@ class Track():
         search_sentence = self.track_name
         for artist in self.list_track_artist:
             search_sentence += " " + artist
-        response = self.youtube.search().list(
-            part="snippet",
-            maxResults=1,
-            q=search_sentence
-        ).execute()
+        try:
+            response = self.youtube.search().list(
+                part="snippet",
+                maxResults=1,
+                q=search_sentence
+            ).execute()
+        except HttpError as e:
+            if e.resp.status == 403:
+                print("You have exceeded your daily limit on Google Cloud.")
+                print("You can try it again tomorrow or"
+                      + "create new Google project")
+                input()
+            else:
+                print("Unexpected error, please try it again or contact me.")
+                input()
+            exit()
+
         video_id = response["items"][0]["id"]["videoId"]
         return video_id
 
