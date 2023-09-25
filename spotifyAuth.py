@@ -21,7 +21,7 @@ class SpotifyAuth():
         self.load_json()
         if not self.logged_user():
             print(
-                "Now, I need you to grant me access to your Spotify"
+                "Now, I need you to grant me access to your Spotify "
                 + "account to download playlists.")
             time.sleep(3)
 
@@ -65,8 +65,8 @@ class SpotifyAuth():
         user_name = api_me.get("display_name")
 
         stay_at_this_acc = input(
-            "You have used this application recently, do you want to"
-            + f"continue as {user_name} (type "'y'") or want to log into"
+            "You have used this application recently, do you want to "
+            + f"continue as {user_name} (type "'y'") or want to log into "
             + "another account (type "'n'"): "
             ).strip(
             ).lower()

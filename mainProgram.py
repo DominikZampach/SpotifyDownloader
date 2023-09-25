@@ -1,4 +1,5 @@
 import os
+from slugify import slugify
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth
 from ytAuth import YTAuth
@@ -32,6 +33,26 @@ class MainProgram():
             os.mkdir(new_folder)
         except FileExistsError:
             pass
+
+
+def slugify_string(string):
+    slugified = slugify(
+        string,
+        lowercase=False,
+        separator=" ",
+        replacements=[
+            ["<", " "],
+            [">", " "],
+            [":", " "],
+            ["\"", " "],
+            ["/", " "],
+            ["\\", " "],
+            ["|", " "],
+            ["?", " "],
+            ["*", " "],
+            ]
+        )
+    return slugified
 
 # EduLint done
 # mypy

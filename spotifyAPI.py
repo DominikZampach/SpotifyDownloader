@@ -1,5 +1,6 @@
 import requests
 from track import Track
+from mainProgram import slugify_string
 
 
 class SpotifyAPI():
@@ -12,9 +13,9 @@ class SpotifyAPI():
 
     def get_list_of_songs(self):
         self.playlist_id: str = self.get_playlist_id()
-
         self.request = self.request_spotify_api()
-        self.playlist_name: str = self.request["name"]
+        # Slugify makes names windows friendly
+        self.playlist_name: str = slugify_string(self.request["name"])
         self.number_of_tracks: int = self.request["tracks"]["total"]
 
         self.tracks: list[Track] = self.get_playlist_tracks()
@@ -26,7 +27,7 @@ class SpotifyAPI():
         # (That means try request that url and see the response code)
         not_url = True
         while not_url:
-            not_url = self.check_url(self)
+            not_url = self.check_url()
         return self.playlist_url[34:self.playlist_url.index("?")]
 
     def check_url(self):
@@ -39,7 +40,7 @@ class SpotifyAPI():
                 (self.playlist_url.startswith
                     ("https://open.spotify.com/playlist/")):
                 self.playlist_url = input(
-                    "This URL adress isn't for Spotify playlist,"
+                    "This URL adress isn't for Spotify playlist, "
                     + "please try it again: ")
 
                 return True
