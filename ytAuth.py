@@ -17,5 +17,5 @@ class YTAuth():
                 data = text.split("key=")[1].strip()
                 return data
 
-#Edulint Done
-#mypy
+# Edulint Done
+# mypy
