@@ -1,6 +1,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import yt_dlp
+from yt_dlp import YoutubeDL
+from yt_dlp import utils
 import os
 import contextlib
 from helpingFunctions import make_windows_friendly
@@ -76,20 +77,32 @@ class Track():
             }]
         }
 
-        with open(os.devnull, 'w') as fnull, \
-                contextlib.redirect_stdout(fnull), \
-                contextlib.redirect_stderr(fnull):
-            # This is for not getting any output into console from yt_dlp
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([url])
-        self.check_download(folder_name, dir_path)
+        already_downloaded = self.check_download(folder_name, dir_path)
+        if not already_downloaded:
+            try:
+                with open(os.devnull, 'w') as fnull, \
+                        contextlib.redirect_stdout(fnull), \
+                        contextlib.redirect_stderr(fnull):
+                    # Not getting any output into console from yt_dlp
+                    with YoutubeDL(ydl_opts) as ydl:
+                        ydl.download([url])
+
+                print(f"Song '{self.track_name}' downloaded.")
+            except utils.DownloadError:
+                print("While downloading song named"
+                      + f"'{self.track_name}' download error occured.")
+            except utils.ExtractorError:
+                print("While downloading song named"
+                      + f"'{self.track_name}' extraction error occured.")
+            except Exception:
+                print("While downloading song named"
+                      + f"'{self.track_name}' unexpected error occured.")
+        else:
+            print(f"Song '{self.track_name}' already downloaded.")
 
     def check_download(self, folder_name, dir_path):
         folder = os.listdir(dir_path + '/downloaded_songs/' + folder_name)
-        if self.download_name + ".mp3" in folder:
-            print("Song named " + self.track_name + " downloaded.")
-        else:
-            print("Song named " + self.track_name + " cannot be downloaded.")
+        return self.download_name + ".mp3" in folder
 
 # EduLint done
 # mypy
