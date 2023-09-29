@@ -3,7 +3,7 @@ from googleapiclient.errors import HttpError
 import yt_dlp
 import os
 import contextlib
-from renameString import make_windows_friendly
+from helpingFunctions import make_windows_friendly
 
 
 class Track():
@@ -41,7 +41,8 @@ class Track():
             response = self.youtube.search().list(
                 part="snippet",
                 maxResults=1,
-                q=search_sentence
+                q=search_sentence,
+                type="video"
             ).execute()
         except HttpError as e:
             if e.resp.status == 403:

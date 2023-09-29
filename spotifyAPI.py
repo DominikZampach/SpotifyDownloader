@@ -1,6 +1,6 @@
 import requests
 from track import Track
-from renameString import make_windows_friendly
+from helpingFunctions import make_windows_friendly
 
 
 class SpotifyAPI():

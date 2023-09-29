@@ -2,6 +2,7 @@ import os
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth
 from ytAuth import YTAuth
+from helpingFunctions import create_folder
 
 
 class MainProgram():
@@ -21,18 +22,11 @@ class MainProgram():
         self.spot_api = SpotifyAPI(self.info["token"], self.api_key)
         self.info["songs"] = self.spot_api.get_list_of_songs()
 
-        self.create_folder(self.spot_api.playlist_name)
+        create_folder(self.spot_api.playlist_name, self.dir_path)
         for song in self.info["songs"]:
             song.download_track(self.spot_api.playlist_name, self.dir_path)
 
-    def create_folder(self, folder_name):
-        new_folder = os.path.join(self.dir_path +
-                                  "/downloaded_songs/" + folder_name)
-        try:
-            os.mkdir(new_folder)
-        except FileExistsError:
-            pass
-
+    
 
 # EduLint done
 # mypy

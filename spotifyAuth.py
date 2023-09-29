@@ -1,7 +1,7 @@
 import requests
 import webbrowser
 import random
-import urllib
+from urllib import parse
 import hashlib
 import base64
 import json
@@ -79,9 +79,9 @@ class SpotifyAuth():
     def time_converter(self, time: str):
         splitted_time = time.split("/")
         for i in range(len(splitted_time)):
-            splitted_time[i] = int(splitted_time[i])
+            splitted_time[i] = int(splitted_time[i]) # type: ignore
 
-        datetime_object = datetime.datetime(*map(int, splitted_time))
+        datetime_object = datetime.datetime(*map(int, splitted_time)) # type: ignore
         return datetime_object
 
     def code_verifier(self) -> str:
@@ -112,7 +112,7 @@ class SpotifyAuth():
                     'code_challenge_method': "S256",
                     'code_challenge': self.code_hashed
                 }
-        auth_url = url + "?" + urllib.parse.urlencode(params)
+        auth_url = url + "?" + parse.urlencode(params)
         webbrowser.open(auth_url)
         time.sleep(3)
         print(
@@ -129,7 +129,7 @@ class SpotifyAuth():
                   'grant_type': "authorization_code",
                   'code': self.data.get("code")}
 
-        acc_token_url = url + "?" + urllib.parse.urlencode(params)
+        acc_token_url = url + "?" + parse.urlencode(params)
         print(acc_token_url)
         response_token = requests.post(
             url=acc_token_url,
