@@ -1,5 +1,7 @@
 # SpotifyPlaylistDownloader
+Only working for playlists, not albums!! (Maybe I will implement it later :D)
 
+Legal things:
 This program/application is created and provided for educational purposes only. The intent of this program/application is to showcase and teach various programming concepts and techniques. It is not intended to be used for any illegal, unethical, or malicious activities.
 
 By using this program/application, you acknowledge that:
