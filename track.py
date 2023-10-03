@@ -27,10 +27,11 @@ class Track():
         self.url_youtube = "https://www.youtube.com/watch?v="
         if self.track_name == self.track_album:
             self.download_name = (
-                f"{self.string_track_artist} - {self.track_name}")
+                f"{self.track_name} - {self.string_track_artist}")
         else:
-            self.download_name = (f"{self.string_track_artist} - "
-                                  + f"{self.track_name} ({self.track_album})")
+            self.download_name = (f"{self.track_name} - " +
+                                  f"{self.string_track_artist} " +
+                                  f"({self.track_album})")
         self.download_name = make_windows_friendly(self.download_name)
 
     def download_track(self, folder_name, dir_path):
