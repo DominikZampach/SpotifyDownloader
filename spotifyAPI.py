@@ -14,7 +14,6 @@ class SpotifyAPI():
     def get_list_of_songs(self):
         self.playlist_id: str = self.get_playlist_id()
         self.request = self.request_spotify_api()
-        # Slugify makes names windows friendly
         self.playlist_name: str = make_windows_friendly(self.request["name"])
         self.number_of_tracks: int = self.request["tracks"]["total"]
 
@@ -48,8 +47,8 @@ class SpotifyAPI():
 
         except requests.exceptions.RequestException:
             self.playlist_url = input(
-                "Text isn't URL adress, please try it again: "
-                )
+                "This URL adress isn't for Spotify playlist, "
+                + "please try it again: ")
 
             return True
 

@@ -31,8 +31,16 @@ class Track():
         else:
             self.download_name = (f"{self.string_track_artist} - "
                                   + f"{self.track_name} ({self.track_album})")
-
         self.download_name = make_windows_friendly(self.download_name)
+
+    def download_track(self, folder_name, dir_path):
+        already_downloaded = self.check_download(folder_name, dir_path)
+        if not already_downloaded:
+            youtube_url = self.url_of_track_on_YT()
+            self.yt_dpl_call(
+                folder_name, dir_path, youtube_url)
+        else:
+            print(f"Song '{self.track_name}' already downloaded.")
 
     def url_of_track_on_YT(self):
         search_sentence = self.track_name
@@ -57,11 +65,13 @@ class Track():
             exit()
 
         video_id = response["items"][0]["id"]["videoId"]
-        return video_id
+        return self.url_youtube + video_id
 
-    def download_track(self, folder_name, dir_path):
-        video_id = self.url_of_track_on_YT()
-        url = self.url_youtube + video_id
+    def check_download(self, folder_name, dir_path):
+        folder = os.listdir(dir_path + '/downloaded_songs/' + folder_name)
+        return self.download_name + ".mp3" in folder
+
+    def yt_dpl_call(self, folder_name, dir_path, url):
         ydl_opts = {
             'outtmpl': f'downloaded_songs/{(folder_name)}'
             + f'/{self.download_name}',
@@ -77,32 +87,24 @@ class Track():
             }]
         }
 
-        already_downloaded = self.check_download(folder_name, dir_path)
-        if not already_downloaded:
-            try:
-                with open(os.devnull, 'w') as fnull, \
-                        contextlib.redirect_stdout(fnull), \
-                        contextlib.redirect_stderr(fnull):
-                    # Not getting any output into console from yt_dlp
-                    with YoutubeDL(ydl_opts) as ydl:
-                        ydl.download([url])
+        try:
+            with open(os.devnull, 'w') as fnull, \
+                    contextlib.redirect_stdout(fnull), \
+                    contextlib.redirect_stderr(fnull):
+                # Not getting any output into console from yt_dlp
+                with YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([url])
 
-                print(f"Song '{self.track_name}' downloaded.")
-            except utils.DownloadError:
-                print("While downloading song named"
-                      + f"'{self.track_name}' download error occured.")
-            except utils.ExtractorError:
-                print("While downloading song named"
-                      + f"'{self.track_name}' extraction error occured.")
-            except Exception:
-                print("While downloading song named"
-                      + f"'{self.track_name}' unexpected error occured.")
-        else:
-            print(f"Song '{self.track_name}' already downloaded.")
-
-    def check_download(self, folder_name, dir_path):
-        folder = os.listdir(dir_path + '/downloaded_songs/' + folder_name)
-        return self.download_name + ".mp3" in folder
+            print(f"Song '{self.track_name}' downloaded.")
+        except utils.DownloadError:
+            print("While downloading song named"
+                  + f"'{self.track_name}' download error occured.")
+        except utils.ExtractorError:
+            print("While downloading song named"
+                  + f"'{self.track_name}' extraction error occured.")
+        except Exception:
+            print("While downloading song named"
+                  + f"'{self.track_name}' unexpected error occured.")
 
 # EduLint done
 # mypy
