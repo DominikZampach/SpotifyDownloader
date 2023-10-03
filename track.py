@@ -57,8 +57,8 @@ class Track():
         except HttpError as e:
             if e.resp.status == 403:
                 print("You have exceeded your daily limit on Google Cloud.")
-                print("You can try it again tomorrow or"
-                      + "create new Google project")
+                print("You can continue tomorrow 😥")
+                print(e)
                 input()
             else:
                 print("Unexpected error, please try it again or contact me.")

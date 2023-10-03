@@ -26,7 +26,5 @@ class MainProgram():
         for song in self.info["songs"]:
             song.download_track(self.spot_api.playlist_name, self.dir_path)
 
-    
-
 # EduLint done
 # mypy
