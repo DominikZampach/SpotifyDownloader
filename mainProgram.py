@@ -1,3 +1,4 @@
+from ast import Dict
 import os
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth
@@ -22,9 +23,9 @@ class MainProgram():
         self.spot_api = SpotifyAPI(self.info["token"], self.api_key)
         self.info["songs"] = self.spot_api.get_list_of_songs()
 
-        create_folder(self.spot_api.playlist_name, self.dir_path)
+        create_folder(self.spot_api.name, self.dir_path)
         for song in self.info["songs"]:
-            song.download_track(self.spot_api.playlist_name, self.dir_path)
+            song.download_track(self.spot_api.name, self.dir_path)
 
 # EduLint done
 # mypy

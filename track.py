@@ -8,11 +8,14 @@ from helpingFunctions import make_windows_friendly
 
 
 class Track():
-    def __init__(self, item, api_key) -> None:
+    def __init__(self, item, api_key, type_of_collection, name) -> None:
         self.youtube = build("youtube", "v3", developerKey=api_key)
-        self.track_album: str = make_windows_friendly(
-            item["album"].get("name"))
-        self.track_name: str = item.get("name")
+        if type_of_collection == "albums":
+            self.track_album = make_windows_friendly(name)
+        else:
+            self.track_album: str = make_windows_friendly(
+                item["album"].get("name"))
+        self.track_name: str = make_windows_friendly(item.get("name"))
         self.string_track_artist: str = ""
         number_of_artists: int = len(item["artists"])
         self.list_track_artist: list = []
