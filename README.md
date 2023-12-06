@@ -1,6 +1,13 @@
 # SpotifyPlaylistDownloader
 Only working for playlists, not albums!! (Maybe I will implement it later :D)
 
+## Dev note
+Need to add Google cloud console API key, create data.json with empty {} and folder downloaded_songs.
+
+
+
+
+
 Legal things:
 This program/application is created and provided for educational purposes only. The intent of this program/application is to showcase and teach various programming concepts and techniques. It is not intended to be used for any illegal, unethical, or malicious activities.
 
