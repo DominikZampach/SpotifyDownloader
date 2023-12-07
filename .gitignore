@@ -1,0 +1,6 @@
+/__pycache__
+config.json
+/src/data.json
+/downloaded_songs
+key.txt
+secret.txt
