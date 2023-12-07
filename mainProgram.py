@@ -3,7 +3,7 @@ import os
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth
 from ytAuth import YTAuth
-from helpingFunctions import create_folder
+from helpingFunctions import create_folder, create_downloaded_songs_folder
 
 
 class MainProgram():
@@ -22,7 +22,7 @@ class MainProgram():
         self.api_key = self.yt_auth.authorize_api_key()
         self.spot_api = SpotifyAPI(self.info["token"], self.api_key)
         self.info["songs"] = self.spot_api.get_list_of_songs()
-
+        create_downloaded_songs_folder(self.dir_path)
         create_folder(self.spot_api.name, self.dir_path)
         for song in self.info["songs"]:
             song.download_track(self.spot_api.name, self.dir_path)

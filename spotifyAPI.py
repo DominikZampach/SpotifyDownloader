@@ -64,7 +64,6 @@ class SpotifyAPI():
 
     def request_spotify_api(self):
         link: str = f'https://api.spotify.com/v1/{self.id_type}/' + self.id
-        print(link)
         request: dict = requests.get(link, headers=self.auth_header).json()
         return request
 
@@ -81,7 +80,6 @@ class SpotifyAPI():
                 + str(offset)
                 )
             request: dict = requests.get(link, headers=self.auth_header).json()
-            print(request)
             for i in range(len(request["items"])):
                 if self.id_type == "playlists":
                     single_item: dict = request["items"][i]["track"]

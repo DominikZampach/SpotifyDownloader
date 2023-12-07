@@ -135,7 +135,6 @@ class SpotifyAuth():
             url=acc_token_url,
             headers={'Content-Type': 'application/x-www-form-urlencoded'}
             ).json()
-        print(response_token)
         return response_token.get("access_token")
 
     def load_json(self):

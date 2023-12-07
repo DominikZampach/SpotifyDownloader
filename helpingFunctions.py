@@ -16,5 +16,9 @@ def create_folder(folder_name, dir_path):
     except FileExistsError:
         pass
 
+def create_downloaded_songs_folder(dir_path):
+    if not os.path.isdir("downloaded_songs"):
+        downloaded_songs_folder = os.path.join(dir_path + "/downloaded_songs")
+        os.mkdir(downloaded_songs_folder)
 # Edulint done
 # MyPy
