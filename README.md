@@ -1,10 +1,5 @@
-# SpotifyPlaylistDownloader
-Only working for playlists, not albums!! (Maybe I will implement it later :D)
-
-## Dev note
-Need to add Google cloud console API key, create data.json with empty {} and folder downloaded_songs.
-
-
+# SpotifyDownloader
+Works for both playlists and albums!!
 
 
 
