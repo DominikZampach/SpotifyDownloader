@@ -9,7 +9,7 @@ def make_windows_friendly(string):
 
 
 def create_folder(folder_name, dir_path):
-    new_folder = os.path.join(dir_path +
+    new_folder = os.path.join(dir_path[0:len(dir_path)-4] +
                               "/downloaded_songs/" + folder_name)
     try:
         os.mkdir(new_folder)
@@ -18,7 +18,7 @@ def create_folder(folder_name, dir_path):
 
 def create_downloaded_songs_folder(dir_path):
     if not os.path.isdir("downloaded_songs"):
-        downloaded_songs_folder = os.path.join(dir_path + "/downloaded_songs")
+        downloaded_songs_folder = os.path.join(dir_path[0:len(dir_path)-4] + "/downloaded_songs")
         os.mkdir(downloaded_songs_folder)
 # Edulint done
 # MyPy

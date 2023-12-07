@@ -19,7 +19,7 @@ class MainProgram():
         print("I'm really happy you have chosen my application <3")
 
         self.info["token"] = self.spot_auth.do_auth()
-        self.api_key = self.yt_auth.authorize_api_key()
+        self.api_key = self.yt_auth.authorize_api_key(self.dir_path)
         self.spot_api = SpotifyAPI(self.info["token"], self.api_key)
         self.info["songs"] = self.spot_api.get_list_of_songs()
         create_downloaded_songs_folder(self.dir_path)

@@ -72,12 +72,12 @@ class Track():
         return self.url_youtube + video_id
 
     def check_download(self, folder_name, dir_path):
-        folder = os.listdir(dir_path + '/downloaded_songs/' + folder_name)
+        folder = os.listdir(dir_path[0:len(dir_path)-4] + '/downloaded_songs/' + folder_name)
         return self.download_name + ".mp3" in folder
 
     def yt_dpl_call(self, folder_name, dir_path, url):
         ydl_opts = {
-            'outtmpl': f'downloaded_songs/{(folder_name)}'
+            'outtmpl': f'{dir_path[0:len(dir_path)-4]}/downloaded_songs/{(folder_name)}'
             + f'/{self.download_name}',
             'format': 'bestaudio/best',
             'ffmpeg_location': (dir_path
