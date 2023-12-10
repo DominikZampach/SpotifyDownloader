@@ -10,7 +10,7 @@ class MainProgram():
         self.dir_path = os.path.dirname(
             os.path.realpath(__file__))  # path to this folder
         self.info = {}
-        self.spot_auth = SpotifyAuth()
+        self.spot_auth = SpotifyAuth(self.dir_path)
         self.yt_auth = YTAuth()
 
     def main(self):

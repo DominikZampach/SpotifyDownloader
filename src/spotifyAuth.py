@@ -10,12 +10,13 @@ import datetime
 
 
 class SpotifyAuth():
-    def __init__(self) -> None:
+    def __init__(self, dir_path) -> None:
         self.client_id: str = "44f4f79135ee4d8883e443eb74bb17f6"
         self.redirect_uri: str = "http://127.0.0.1:5678/redirect"
         self.code_hashed: str
         self.code_veri: str
         self.token: str
+        self.dir_path = dir_path
 
     def do_auth(self):  # main function of this class!
         self.load_json()
@@ -138,12 +139,12 @@ class SpotifyAuth():
 
     def load_json(self):
         # Get data from JSON
-        with open('data.json', 'r') as f:
+        with open(self.dir_path + '/data.json', 'r') as f:
             self.data = json.load(f)
 
     def save_json(self):
         # Save data into JSON
-        with open('data.json', 'w') as f:
+        with open(self.dir_path + '/data.json', 'w') as f:
             self.data["token"] = self.token
             self.data["token_call_datetime"] = self.current_time_and_date()
             json_object = json.dumps(self.data, indent=4)
