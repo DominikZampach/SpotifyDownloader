@@ -6,3 +6,4 @@ config.json
 /downloaded_songs
 key.txt
 scrt.txt
+/src/myenv

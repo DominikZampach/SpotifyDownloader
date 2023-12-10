@@ -1,10 +1,5 @@
 import os
-import flask
-import requests
-import urllib
-import googleapiclient
-import yt_dlp
-import contextlib
+import sys
 
 def make_windows_friendly(string):
     chars_to_replace = ["<", ">", ":", "\"", "/", "\\", "|", "?", "*"]
@@ -28,17 +23,15 @@ def create_downloaded_songs_folder(dir_path):
         
 def check_all_packages():
     try:
-        print(flask.__version__)
-        print(requests.__version__)
-        print(urllib.__version__)
-        print(googleapiclient.__version__)
-        print(yt_dlp.__version__)
-        print(contextlib.__version__)
+        import flask
+        import requests
+        import googleapiclient
+        import yt_dlp
     except:
-        print("You don't have all packages, please download them with Package-download.bat\n" +
-              "with administration privileges.")
+        print("You don't have all packages, please download them with Package-download.bat")
+        print("Press enter to leave application")
         input()
-        # Exit
+        sys.exit()
 
 # Edulint done
 # MyPy

@@ -1,4 +1,3 @@
-from ast import Dict
 import os
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth

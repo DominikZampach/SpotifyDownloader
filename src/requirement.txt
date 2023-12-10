@@ -1,6 +1,0 @@
-flask
-requests
-urllib
-googleapiclient
-yt_dlp
-contextlib

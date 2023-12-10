@@ -130,7 +130,6 @@ class SpotifyAuth():
                   'code': self.data.get("code")}
 
         acc_token_url = url + "?" + parse.urlencode(params)
-        print(acc_token_url)
         response_token = requests.post(
             url=acc_token_url,
             headers={'Content-Type': 'application/x-www-form-urlencoded'}
