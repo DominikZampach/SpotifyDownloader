@@ -1,9 +1,6 @@
 flask
 requests
-webbrowser
 urllib
-hashlib
-base64
 googleapiclient
 yt_dlp
 contextlib

@@ -3,7 +3,7 @@ import os
 from spotifyAPI import SpotifyAPI
 from spotifyAuth import SpotifyAuth
 from ytAuth import YTAuth
-from helpingFunctions import create_folder, create_downloaded_songs_folder
+from helpingFunctions import create_folder, create_downloaded_songs_folder, check_all_packages
 
 
 class MainProgram():
@@ -15,6 +15,7 @@ class MainProgram():
         self.yt_auth = YTAuth()
 
     def main(self):
+        check_all_packages()
         print("Welcome to my application for downloading Spotify playlists.")
         print("I'm really happy you have chosen my application <3")
 
