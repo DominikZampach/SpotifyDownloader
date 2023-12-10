@@ -17,7 +17,7 @@ def create_folder(folder_name, dir_path):
         pass
 
 def create_downloaded_songs_folder(dir_path):
-    if not os.path.isdir("downloaded_songs"):
+    if not os.path.isdir(dir_path[0:len(dir_path)-4] + "/downloaded_songs"):
         downloaded_songs_folder = os.path.join(dir_path[0:len(dir_path)-4] + "/downloaded_songs")
         os.mkdir(downloaded_songs_folder)
         
