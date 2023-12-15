@@ -41,7 +41,7 @@ Take this key and open file named key.txt in folder with program. Paste this key
 *(Congratulations, you managed to do the hardest part of all 😄.)*
 
 ### Downloading packages
-If you are using this program for the first time, you will need to download Python packages for this script to work. Simply open "Package-download.bat" file and let the script download everything for you.
+If you are using this program for the first time, you will need to download Python packages for this script to work. Simply open "Packages.bat" file and let the script download everything for you.
 
 After downloading will end, you can close this script and ready to go using program ♥.
 
