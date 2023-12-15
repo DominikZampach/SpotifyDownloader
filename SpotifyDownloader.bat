@@ -1,2 +1,2 @@
 @echo off
-start ./src/SpotifyDownloader.bat
+start /B cmd /C src/SpotifyDownloader.bat
