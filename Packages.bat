@@ -1,2 +1,2 @@
 @echo off
-start ./src/Package-download.bat
+start /B cmd /C src/Package-download.bat
