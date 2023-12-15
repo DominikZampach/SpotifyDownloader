@@ -7,14 +7,14 @@
 This program is simple CLI Python script, that takes URL of Spotify playlist/album and download it locally into your PC. It's using Spotify API to get informations about songs, then it's searching for these songs on YouTube via Google YouTube API and then downloading best match with yt_dlp.
 
 ## Table of contents
-- Requirements
-- How to setup SpotifyDownloader
-  - Download
-  - Google key
-  - Downloading packages
- - How to actually use SpotifyDownloader
- - Limitations
- - Legality statement
+- [Requirements]
+- [How to setup SpotifyDownloader]
+  - [Download]
+  - [Google key]
+  - [Downloading packages]
+ - [How to actually use SpotifyDownloader]
+ - [Limitations]
+ - [Legality statement]
 ## Requirements
 
  - Python 3.10 or newer (https://www.python.org/downloads/)
