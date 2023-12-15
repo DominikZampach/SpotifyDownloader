@@ -4,7 +4,7 @@ echo Downloading python packages...
 if exist myenv (
     echo Virtual env already exists, going to download packages only.
 ) else (
-    echo Creating virtual env.
+    echo Creating virtual env (can take little longer)...
     python -m venv myenv
 )
 

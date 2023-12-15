@@ -2,7 +2,6 @@
 /.vscode
 /src/.vscode
 config.json
-/src/data.json
 /downloaded_songs
 key.txt
 scrt.txt
