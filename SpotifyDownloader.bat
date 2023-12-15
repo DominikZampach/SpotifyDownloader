@@ -1,2 +1,4 @@
 @echo off
-start /B cmd /C "cd /D src && call SpotifyDownloader.bat"
+cd src
+call SpotifyDownloader.bat
+exit
