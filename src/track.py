@@ -3,6 +3,7 @@ from googleapiclient.errors import HttpError
 from yt_dlp import YoutubeDL
 from yt_dlp import utils
 import os
+import eyed3
 import contextlib
 from helpingFunctions import make_windows_friendly
 
@@ -43,9 +44,17 @@ class Track():
             youtube_url = self.url_of_track_on_YT()
             self.yt_dpl_call(
                 folder_name, dir_path, youtube_url)
+            self.add_metadata(folder_name, dir_path)
         else:
             print(f"Song '{self.track_name}' already downloaded.")
 
+    def add_metadata(self, folder_name, dir_path):
+        mp3_file = f'{dir_path[0:len(dir_path)-4]}/downloaded_songs/{(folder_name)}/{self.download_name}.mp3'
+        audiofile = eyed3.load(mp3_file)
+        audiofile.tag.artist = self.string_track_artist
+        audiofile.tag.album = self.track_album
+        audiofile.tag.save()
+        
     def url_of_track_on_YT(self):
         search_sentence = self.track_name
         for artist in self.list_track_artist:

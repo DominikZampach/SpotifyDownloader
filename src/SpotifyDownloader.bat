@@ -1,8 +1,8 @@
-call \myenv\Scripts\activate
+call myenv\Scripts\activate
 
-start python server.py
+start cmd /c "python server.py"
 
-start python main.py
+start cmd /c "python main.py"
 
 REM For testing error occuring
 ::start /b cmd /c "python main.py"
@@ -11,3 +11,5 @@ REM For testing error occuring
 ::    pause
 ::    exit /b %ERRORLEVEL%
 ::)
+
+::call \myenv\Scripts\deactivate

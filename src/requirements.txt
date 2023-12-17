@@ -1,4 +1,6 @@
 flask
 requests
 yt_dlp
+eyed3
+python-magic-bin
 google-api-python-client
