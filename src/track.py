@@ -51,6 +51,7 @@ class Track():
     def add_metadata(self, folder_name, dir_path):
         mp3_file = f'{dir_path[0:len(dir_path)-4]}/downloaded_songs/{(folder_name)}/{self.download_name}.mp3'
         audiofile = eyed3.load(mp3_file)
+        artists = self.string_track_artist.replace(",", ";")
         audiofile.tag.artist = self.string_track_artist
         audiofile.tag.album = self.track_album
         audiofile.tag.save()
