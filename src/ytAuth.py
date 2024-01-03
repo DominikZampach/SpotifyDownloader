@@ -1,14 +1,16 @@
+import sys
+
 class YTAuth():
     def authorize_api_key(self, dir_path):
         api_key = self.get_api_key(dir_path)
-        if api_key == "delete_this_and_enter_your_key":
+        if api_key == "":
             self.how_to_setup_API_key()
-            api_key = self.get_api_key(dir_path)
+            input()
+            sys.exit()
         return api_key
 
     def how_to_setup_API_key(self):
-        print("Do this and than, then press enter...")
-        input()
+        print("There is no key in key.txt file. Please look at README.md for more info...")
 
     def get_api_key(self, dir_path):
         with open(f'{dir_path[0:len(dir_path)-4]}/key.txt', 'r') as f:
