@@ -32,6 +32,8 @@ If you know how to use Git, you can just simply clone this repository into your 
 ### Google key
 First of all, you will need to get API key for YouTube search. Go to this website: (https://console.cloud.google.com/), login here and choose New project.
 
+After that, you need to go to "Enabled APIs and services" and find there "YouTube Data API v3". Click on it and enable YouTube Data API v3 (https://console.cloud.google.com/apis/library/youtube.googleapis.com).
+
 After choosing name, click Create and go to "APIs and services" and then to "Credentials". Or you can go here by clicking this URL (https://console.cloud.google.com/apis/credentials).
 
 Here, click "Create credentials", choose API key and create it. Now, you will see API key 1. Click on "SHOW KEY" and copy the key.
