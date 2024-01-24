@@ -91,9 +91,8 @@ class Track():
             + f'/{self.download_name}',
             'format': 'bestaudio/best',
             'ffmpeg_location': (dir_path
-                                + '/ffmpeg-6.0-essentials_build/bin'
                                 + '/ffmpeg.exe'),
-            # Path to FFmpeg inside SpotifyPlaylistDownloader
+            # Path to FFmpeg inside SpotifyDownloader
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
